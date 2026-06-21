@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<script>
+/*! anti-peek v1 */
+(function(){
+  try{
+    function blockKey(e){
+      var k=(e.key||'').toLowerCase(),c=e.ctrlKey||e.metaKey,s=e.shiftKey;
+      if(k==='f12'){e.preventDefault();return false;}
+      if(c&&(k==='u'||k==='s')){e.preventDefault();return false;}
+      if(c&&s&&(k==='i'||k==='j'||k==='c'||k==='k')){e.preventDefault();return false;}
+    }
+    window.addEventListener('keydown',blockKey,true);
+    document.addEventListener('contextmenu',function(e){e.preventDefault();return false;},true);
+    document.addEventListener('selectstart',function(e){
+      var t=e.target,tag=(t&&t.tagName)||'';
+      if(tag==='INPUT'||tag==='TEXTAREA'||(t&&t.isContentEditable))return;
+      e.preventDefault();return false;
+    },true);
+    document.addEventListener('dragstart',function(e){e.preventDefault();return false;},true);
+    document.addEventListener('copy',function(e){
+      var t=e.target,tag=(t&&t.tagName)||'';
+      if(tag==='INPUT'||tag==='TEXTAREA'||(t&&t.isContentEditable))return;
+      e.preventDefault();return false;
+    },true);
+    var devOpen=false,thresh=170;
+    setInterval(function(){
+      var wD=window.outerWidth-window.innerWidth,hD=window.outerHeight-window.innerHeight;
+      var open=(wD>thresh||hD>thresh);
+      if(open!==devOpen){
+        devOpen=open;
+        if(document.body) document.body.style.filter=open?'blur(24px) saturate(0.4)':'';
+      }
+    },900);
+    try{
+      var msg='%c LifeBeyond · 数字彼岸 ';
+      var sty1='background:linear-gradient(90deg,#FFD37A,#A285FF);color:#0b1220;font-size:34px;font-weight:700;padding:16px 32px;border-radius:12px;';
+      var sty2='color:#FF8FB3;font-size:14px;line-height:1.8;';
+      console.log(msg,sty1);
+      console.log('%c\n这里是 LifeBeyond 的私人星海。\n如果你正在尝试复制或破解，请先停下来想想：\n你认识的某个人，可能也在你的星海里 ✦\n',sty2);
+    }catch(_){}
+    var noop=function(){};
+    setTimeout(function(){try{['log','warn','info','debug'].forEach(function(k){if(console[k])console[k]=noop;});}catch(_){}}, 1500);
+  }catch(_){}
+})();
+</script>
+<meta name="description" content="LifeBeyond · 数字彼岸 — 一个把记忆里那个人留在星海里的沉浸式数字体验项目。">
+<title>LifeBeyond · 数字彼岸 / 项目作品集</title>
+<link rel="icon" href="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' stop-color='%23FFD37A'/><stop offset='100%25' stop-color='%23A285FF'/></linearGradient></defs><circle cx='32' cy='32' r='28' fill='url(%23g)'/><circle cx='32' cy='32' r='10' fill='%230b1220'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.cn">
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.cn/css2?family=Cormorant+Garamond:wght@400;500;600&family=Noto+Serif+SC:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap">
+<style>
+:root {
+  --bg-deep: #050810;
+  --bg-mid: #0b1226;
+  --gold: #FFD37A;
+  --gold-soft: #FFE7AE;
+  --purple: #A285FF;
+  --pink: #FF8FB3;
+  --cyan: #63E6FF;
+  --text: #F2EFE8;
+  --text-soft: rgba(242,239,232,0.78);
+  --text-mute: rgba(242,239,232,0.5);
+  --border: rgba(255,255,255,0.08);
+  --glass: rgba(20,28,52,0.55);
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { background: var(--bg-deep); color: var(--text); font-family: 'Inter','Noto Serif SC',-apple-system,system-ui,sans-serif; line-height: 1.7; overflow-x: hidden; scroll-behavior: smooth; }
+body {
+  background:
+    radial-gradient(ellipse 1100px 700px at 12% 0%, rgba(162,133,255,0.18), transparent 60%),
+    radial-gradient(ellipse 900px 600px at 90% 18%, rgba(255,143,179,0.12), transparent 60%),
+    radial-gradient(ellipse 1300px 900px at 50% 95%, rgba(255,211,122,0.08), transparent 60%),
+    linear-gradient(180deg, #050810 0%, #0a1024 40%, #0b1226 100%);
+  min-height: 100vh;
+}
+::selection { background: rgba(255,211,122,0.35); color: #fff; }
+
+/* 星空背景 */
+.stars-layer {
+  position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    radial-gradient(1px 1px at 20% 30%, rgba(255,255,255,0.85), transparent),
+    radial-gradient(1px 1px at 80% 60%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1.2px 1.2px at 35% 80%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(0.8px 0.8px at 65% 25%, rgba(255,211,122,0.7), transparent),
+    radial-gradient(1px 1px at 88% 80%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 5% 65%, rgba(162,133,255,0.6), transparent),
+    radial-gradient(0.8px 0.8px at 95% 12%, rgba(99,230,255,0.6), transparent),
+    radial-gradient(1px 1px at 12% 18%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(0.8px 0.8px at 50% 50%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 72% 75%, rgba(255,143,179,0.55), transparent),
+    radial-gradient(1.2px 1.2px at 28% 92%, rgba(255,255,255,0.6), transparent),
+    radial-gradient(1px 1px at 60% 38%, rgba(255,255,255,0.55), transparent),
+    radial-gradient(0.8px 0.8px at 8% 78%, rgba(255,211,122,0.6), transparent),
+    radial-gradient(1px 1px at 92% 45%, rgba(255,255,255,0.5), transparent),
+    radial-gradient(1px 1px at 45% 12%, rgba(162,133,255,0.55), transparent),
+    radial-gradient(0.6px 0.6px at 70% 88%, rgba(255,255,255,0.7), transparent),
+    radial-gradient(1px 1px at 18% 55%, rgba(99,230,255,0.5), transparent);
+  background-size: 100% 100%;
+  animation: starsPan 90s linear infinite;
+  opacity: 0.85;
+}
+/* 交互星海层 — 鼠标可推开的星点 + 星座连线 + 流动星系 */
+#cosmic-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  mix-blend-mode: screen;
+}
+@keyframes starsPan {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-60px); }
+}
+.glow-orb {
+  position: fixed; pointer-events: none; z-index: 0;
+  width: 520px; height: 520px; border-radius: 50%;
+  filter: blur(110px); opacity: 0.45;
+  animation: orbFloat 22s ease-in-out infinite;
+}
+.glow-orb.gold  { background: radial-gradient(circle, rgba(255,211,122,0.55), transparent 70%); top:-180px; right:-120px; }
+.glow-orb.purple{ background: radial-gradient(circle, rgba(162,133,255,0.55), transparent 70%); bottom:-220px; left:-150px; animation-delay:-7s; }
+.glow-orb.pink  { background: radial-gradient(circle, rgba(255,143,179,0.45), transparent 70%); top:50%; left:50%; transform:translate(-50%,-50%); animation-delay:-14s; opacity:0.25; }
+@keyframes orbFloat {
+  0%,100% { transform: translate(0,0); }
+  33% { transform: translate(40px, -28px); }
+  66% { transform: translate(-30px, 20px); }
+}
+
+/* nav */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 22px 56px;
+  background: linear-gradient(180deg, rgba(5,8,16,0.7), transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 12px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 600; letter-spacing: 0.04em;
+}
+.nav-brand-dot {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), var(--purple));
+  box-shadow: 0 0 16px rgba(255,211,122,0.5);
+  position: relative;
+}
+.nav-brand-dot::after {
+  content: ''; position: absolute; inset: 6px;
+  border-radius: 50%; background: var(--bg-deep);
+}
+.nav-links { display: flex; gap: 28px; align-items: center; }
+.nav-links a {
+  color: var(--text-soft); text-decoration: none;
+  font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase;
+  position: relative; padding: 6px 2px;
+  transition: color 0.3s;
+}
+.nav-links a:hover { color: var(--gold); }
+.nav-links a::after {
+  content: ''; position: absolute; left: 0; bottom: 0; height: 1px;
+  width: 0; background: var(--gold); transition: width 0.4s ease;
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  padding: 9px 22px; border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%);
+  color: #1a0f00 !important; font-weight: 600 !important; letter-spacing: 0.04em !important;
+  box-shadow: 0 8px 22px rgba(255,211,122,0.3);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.nav-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(255,211,122,0.45); }
+.nav-cta-pro {
+  padding: 9px 22px; border-radius: 999px;
+  background: linear-gradient(135deg, #A285FF 0%, #6FE2FF 100%);
+  color: #0b0820 !important; font-weight: 600 !important; letter-spacing: 0.04em !important;
+  box-shadow: 0 8px 22px rgba(162,133,255,0.32);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+}
+.nav-cta-pro:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(162,133,255,0.5); }
+.nav-cta-pro::after {
+  content: 'PRO'; position: absolute; top: -8px; right: -10px;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.1em;
+  background: linear-gradient(135deg, #FFD37A, #FFA85F);
+  color: #1a0f00; padding: 2px 6px; border-radius: 6px;
+  box-shadow: 0 4px 10px rgba(255,168,95,0.4);
+}
+.cta-pro {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 18px 40px; border-radius: 999px;
+  background: linear-gradient(135deg, #A285FF 0%, #6FE2FF 100%);
+  color: #0b0820; font-weight: 600; font-size: 16px; letter-spacing: 0.06em;
+  text-decoration: none; box-shadow: 0 18px 50px rgba(162,133,255,0.36);
+  transition: transform 0.4s, box-shadow 0.4s;
+  position: relative; overflow: hidden;
+}
+.cta-pro:hover { transform: translateY(-3px); box-shadow: 0 24px 60px rgba(162,133,255,0.5); }
+.cta-pro::before {
+  content: 'PRO'; position: absolute; top: -10px; right: 14px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+  background: linear-gradient(135deg, #FFD37A, #FFA85F);
+  color: #1a0f00; padding: 3px 8px; border-radius: 8px;
+  box-shadow: 0 6px 14px rgba(255,168,95,0.5);
+}
+.version-compare {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px; margin: 60px auto 0; max-width: 980px;
+}
+.vc-card {
+  position: relative; padding: 36px 32px 32px; border-radius: 24px;
+  background: rgba(12,18,38,0.55); border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px); transition: transform 0.4s, border-color 0.4s, box-shadow 0.4s;
+  text-align: left;
+}
+.vc-card:hover { transform: translateY(-4px); border-color: rgba(255,211,122,0.3); box-shadow: 0 22px 60px rgba(0,0,0,0.4); }
+.vc-card.pro { border-color: rgba(162,133,255,0.28); }
+.vc-card.pro:hover { border-color: rgba(162,133,255,0.55); box-shadow: 0 22px 60px rgba(162,133,255,0.22); }
+.vc-badge {
+  display: inline-block; font-size: 10px; letter-spacing: 0.18em;
+  padding: 5px 12px; border-radius: 999px; margin-bottom: 18px;
+  background: rgba(255,211,122,0.14); color: #FFD37A;
+  border: 1px solid rgba(255,211,122,0.3);
+}
+.vc-card.pro .vc-badge { background: rgba(162,133,255,0.18); color: #C5B0FF; border-color: rgba(162,133,255,0.4); }
+.vc-title { font-size: 24px; font-weight: 600; margin: 0 0 6px; color: #fff; letter-spacing: 0.02em; }
+.vc-sub { font-size: 13px; color: rgba(255,255,255,0.55); margin: 0 0 22px; letter-spacing: 0.04em; }
+.vc-features { list-style: none; padding: 0; margin: 0 0 26px; }
+.vc-features li { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; font-size: 14px; color: rgba(255,255,255,0.78); }
+.vc-features li::before { content: '✦'; color: #FFD37A; flex-shrink: 0; margin-top: 1px; }
+.vc-card.pro .vc-features li::before { color: #A285FF; }
+.vc-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  padding: 12px 22px; border-radius: 999px;
+  font-size: 14px; font-weight: 600; letter-spacing: 0.05em;
+  text-decoration: none; transition: transform 0.3s, box-shadow 0.3s;
+}
+.vc-cta.gold { background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 100%); color: #1a0f00; box-shadow: 0 10px 24px rgba(255,211,122,0.32); }
+.vc-cta.gold:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(255,211,122,0.45); }
+.vc-cta.purple { background: linear-gradient(135deg, #A285FF 0%, #6FE2FF 100%); color: #0b0820; box-shadow: 0 10px 24px rgba(162,133,255,0.36); }
+.vc-cta.purple:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(162,133,255,0.5); }
+.nav-cta::after { display: none; }
+
+/* sections */
+section { position: relative; z-index: 1; padding: 110px 56px; max-width: 1280px; margin: 0 auto; }
+.section-tag {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-size: 12px; letter-spacing: 0.32em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 22px;
+}
+.section-tag::before {
+  content: ''; width: 32px; height: 1px; background: var(--gold);
+}
+.section-title {
+  font-family: 'Cormorant Garamond','Noto Serif SC', serif;
+  font-size: clamp(34px, 4.4vw, 60px); line-height: 1.15; font-weight: 500;
+  letter-spacing: -0.01em; margin-bottom: 26px;
+}
+.section-title .em {
+  background: linear-gradient(120deg, var(--gold), var(--pink), var(--purple));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  font-style: italic;
+}
+.section-desc {
+  font-size: 16px; color: var(--text-soft);
+  max-width: 720px; line-height: 1.95;
+}
+
+/* hero */
+.hero {
+  min-height: 100vh; display: flex; flex-direction: column;
+  justify-content: center; padding-top: 0;
+}
+.hero-eyebrow {
+  font-size: 13px; letter-spacing: 0.4em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 32px; opacity: 0.9;
+  display: inline-flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before, .hero-eyebrow::after {
+  content: ''; width: 26px; height: 1px; background: var(--gold);
+}
+.hero-title {
+  font-family: 'Cormorant Garamond','Noto Serif SC', serif;
+  font-size: clamp(52px, 9vw, 130px); line-height: 0.95;
+  font-weight: 500; letter-spacing: -0.02em;
+  margin-bottom: 22px;
+}
+.hero-title .l1 { display: block; color: var(--text); }
+.hero-title .l2 {
+  display: block; font-style: italic; font-weight: 400;
+  background: linear-gradient(120deg, var(--gold) 10%, var(--pink) 50%, var(--purple) 90%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+  filter: drop-shadow(0 0 28px rgba(255,211,122,0.18));
+}
+.hero-sub {
+  font-size: clamp(15px, 1.4vw, 19px); color: var(--text-soft);
+  max-width: 540px; line-height: 1.95; margin-bottom: 56px;
+}
+.hero-cta-row { display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
+.cta-primary {
+  display: inline-flex; align-items: center; gap: 14px;
+  padding: 18px 40px; border-radius: 999px;
+  background: linear-gradient(135deg, var(--gold) 0%, var(--gold-soft) 50%, #FFC468 100%);
+  color: #1a0f00; font-weight: 600; font-size: 16px; letter-spacing: 0.06em;
+  text-decoration: none; box-shadow: 0 18px 50px rgba(255,211,122,0.32);
+  transition: transform 0.4s, box-shadow 0.4s;
+  position: relative; overflow: hidden;
+}
+.cta-primary::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(135deg, transparent 30%, rgba(255,255,255,0.5) 50%, transparent 70%);
+  transform: translateX(-120%); transition: transform 0.7s;
+}
+.cta-primary:hover { transform: translateY(-3px); box-shadow: 0 26px 70px rgba(255,211,122,0.45); }
+.cta-primary:hover::before { transform: translateX(120%); }
+.cta-primary .arrow { transition: transform 0.4s; }
+.cta-primary:hover .arrow { transform: translateX(6px); }
+.cta-secondary {
+  display: inline-flex; align-items: center; gap: 12px;
+  padding: 18px 32px; border-radius: 999px;
+  background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+  color: var(--text); font-size: 14px; letter-spacing: 0.06em;
+  text-decoration: none; backdrop-filter: blur(14px);
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+.cta-secondary:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,211,122,0.4); transform: translateY(-2px); }
+
+.hero-meta {
+  position: absolute; bottom: 60px; left: 56px; right: 56px;
+  display: flex; justify-content: space-between; align-items: end;
+  font-size: 12px; letter-spacing: 0.2em; color: var(--text-mute);
+  text-transform: uppercase;
+}
+.hero-meta .mt-block { display: flex; flex-direction: column; gap: 6px; }
+.hero-meta .mt-label { font-size: 10px; opacity: 0.6; }
+.hero-meta .mt-value { font-size: 13px; color: var(--text-soft); letter-spacing: 0.12em; }
+
+/* —— intro / story —— */
+.story-grid { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 80px; align-items: center; }
+.story-visual {
+  position: relative; aspect-ratio: 1 / 1; border-radius: 24px; overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, rgba(162,133,255,0.5), rgba(11,18,38,0.95) 70%);
+  border: 1px solid var(--border); box-shadow: 0 30px 80px rgba(0,0,0,0.5);
+}
+.story-visual::before {
+  content:''; position:absolute; inset: 28%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.95), rgba(255,211,122,0.75) 35%, rgba(162,133,255,0.4) 70%, rgba(99,230,255,0.2));
+  filter: blur(2px) drop-shadow(0 0 60px rgba(255,211,122,0.5));
+  animation: planetSpin 26s linear infinite;
+}
+.story-visual::after {
+  content:''; position:absolute; inset: 8%; border-radius: 50%;
+  border: 1px solid rgba(255,211,122,0.25);
+  animation: ringRotate 40s linear infinite;
+  box-shadow: inset 0 0 40px rgba(255,211,122,0.1);
+}
+@keyframes planetSpin { to { transform: rotate(360deg); } }
+@keyframes ringRotate { to { transform: rotate(-360deg); } }
+
+.story-text h3 {
+  font-family: 'Cormorant Garamond','Noto Serif SC', serif;
+  font-size: 32px; font-weight: 500; line-height: 1.3; margin-bottom: 22px;
+}
+.story-text p {
+  color: var(--text-soft); font-size: 15.5px; line-height: 2; margin-bottom: 18px;
+}
+.story-text p .hi { color: var(--gold); font-weight: 500; }
+
+/* —— feature grid —— */
+.feature-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+.feat-card {
+  position: relative; padding: 38px 30px 32px;
+  background: linear-gradient(180deg, rgba(20,28,52,0.55), rgba(11,18,38,0.4));
+  border: 1px solid var(--border); border-radius: 22px;
+  backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px);
+  overflow: hidden; transition: transform 0.5s, border-color 0.5s, box-shadow 0.5s;
+}
+.feat-card::before {
+  content:''; position: absolute; top: -50%; left: -10%; width: 120%; height: 60%;
+  background: radial-gradient(ellipse, var(--feat-glow,rgba(255,211,122,0.18)), transparent 70%);
+  filter: blur(40px); opacity: 0.7;
+  transition: opacity 0.6s;
+}
+.feat-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(255,211,122,0.25);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.45);
+}
+.feat-card:hover::before { opacity: 1; }
+.feat-icon {
+  width: 56px; height: 56px; border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 26px; margin-bottom: 22px;
+  background: linear-gradient(135deg, rgba(255,211,122,0.16), rgba(162,133,255,0.16));
+  border: 1px solid rgba(255,211,122,0.25);
+  position: relative; z-index: 2;
+}
+.feat-num {
+  position: absolute; top: 20px; right: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; color: rgba(255,211,122,0.18); font-style: italic;
+}
+.feat-name {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px; font-weight: 600; margin-bottom: 6px;
+  position: relative; z-index: 2;
+}
+.feat-en {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 13px; letter-spacing: 0.18em; color: var(--gold);
+  margin-bottom: 18px; opacity: 0.85;
+  position: relative; z-index: 2;
+}
+.feat-desc {
+  color: var(--text-soft); font-size: 14px; line-height: 1.85;
+  position: relative; z-index: 2;
+}
+.feat-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; position: relative; z-index: 2; }
+.feat-tag {
+  font-size: 11px; padding: 4px 10px; border-radius: 999px;
+  background: rgba(255,255,255,0.05); color: var(--text-mute);
+  border: 1px solid rgba(255,255,255,0.05);
+  letter-spacing: 0.08em;
+}
+
+/* —— design philosophy —— */
+.philo-row {
+  display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 60px; align-items: start;
+}
+.philo-left { padding-right: 20px; }
+.philo-points { margin-top: 38px; display: flex; flex-direction: column; gap: 26px; }
+.philo-point {
+  display: grid; grid-template-columns: 60px 1fr; gap: 22px; align-items: start;
+}
+.philo-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 36px; color: var(--gold); font-style: italic;
+  border-right: 1px solid rgba(255,211,122,0.25); padding-right: 20px;
+  text-align: right; line-height: 1; padding-top: 6px;
+}
+.philo-text h4 {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px; font-weight: 600; margin-bottom: 8px;
+}
+.philo-text p { color: var(--text-soft); font-size: 14.5px; line-height: 1.85; }
+.philo-quote {
+  padding: 32px 28px;
+  background: linear-gradient(180deg, rgba(255,211,122,0.06), rgba(162,133,255,0.06));
+  border: 1px solid rgba(255,211,122,0.15);
+  border-radius: 18px; backdrop-filter: blur(18px);
+  font-family: 'Cormorant Garamond','Noto Serif SC', serif;
+  font-size: 19px; font-style: italic; line-height: 1.8;
+  color: var(--gold-soft); position: relative;
+}
+.philo-quote::before {
+  content: '"'; position: absolute; top: -8px; left: 18px;
+  font-size: 80px; color: rgba(255,211,122,0.25); font-family: serif; line-height: 1;
+}
+.philo-quote-author {
+  display: block; margin-top: 18px;
+  font-style: normal; font-size: 12px; letter-spacing: 0.2em;
+  color: var(--text-mute); text-transform: uppercase;
+}
+
+/* —— tech stack —— */
+.tech-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 40px; }
+.tech-card {
+  padding: 22px 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border); border-radius: 16px;
+  display: flex; flex-direction: column; gap: 8px;
+  transition: background 0.3s, border-color 0.3s, transform 0.3s;
+}
+.tech-card:hover {
+  background: rgba(255,255,255,0.06);
+  border-color: rgba(255,211,122,0.3);
+  transform: translateY(-3px);
+}
+.tech-card .t-icon { font-size: 20px; }
+.tech-card .t-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 16px; letter-spacing: 0.06em; font-weight: 600; color: var(--gold-soft);
+}
+.tech-card .t-desc { font-size: 12px; color: var(--text-mute); line-height: 1.7; }
+.craft-stats {
+  display: flex; gap: 60px; margin-top: 60px; padding-top: 40px;
+  border-top: 1px dashed rgba(255,255,255,0.08);
+}
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 56px; line-height: 1; color: var(--gold);
+  font-weight: 500; font-style: italic;
+}
+.stat-label {
+  font-size: 11px; letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--text-mute); margin-top: 8px;
+}
+
+/* —— final CTA —— */
+.final-cta {
+  text-align: center; padding: 140px 40px;
+  background:
+    radial-gradient(ellipse 600px 300px at 50% 50%, rgba(255,211,122,0.16), transparent 60%);
+}
+.final-cta .section-title { margin: 0 auto 36px; max-width: 880px; }
+.final-cta .section-desc { margin: 0 auto 50px; }
+
+/* —— footer —— */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 48px 56px;
+  display: flex; justify-content: space-between; align-items: center;
+  font-size: 12px; color: var(--text-mute); letter-spacing: 0.16em;
+  position: relative; z-index: 1; margin-top: 40px;
+  flex-wrap: wrap; gap: 16px;
+}
+footer a { color: var(--text-mute); text-decoration: none; }
+footer a:hover { color: var(--gold); }
+.footer-links { display: flex; gap: 28px; }
+
+/* scroll reveal */
+.reveal { opacity: 0; transform: translateY(30px); transition: opacity 1s ease, transform 1s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+/* —— responsive —— */
+@media (max-width: 960px) {
+  .nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  section { padding: 80px 28px; }
+  .hero-meta { left: 28px; right: 28px; flex-direction: column; gap: 18px; align-items: start; }
+  .story-grid, .philo-row { grid-template-columns: 1fr; gap: 40px; }
+  .feature-grid { grid-template-columns: 1fr; }
+  .tech-grid { grid-template-columns: repeat(2, 1fr); }
+  .craft-stats { gap: 32px; flex-wrap: wrap; }
+  footer { flex-direction: column; align-items: start; padding: 32px 24px; }
+}
+</style>
+</head>
+<body>
+
+<div class="stars-layer"></div>
+<canvas id="cosmic-canvas" aria-hidden="true"></canvas>
+<div class="glow-orb gold"></div>
+<div class="glow-orb purple"></div>
+<div class="glow-orb pink"></div>
+
+<nav class="nav">
+  <div class="nav-brand">
+    <span class="nav-brand-dot"></span>
+    LifeBeyond
+  </div>
+  <div class="nav-links">
+    <a href="#story">关于</a>
+    <a href="#features">模块</a>
+    <a href="#design">理念</a>
+    <a href="lifebeyond.byzmy.protected.html" class="nav-cta">进入彼岸 →</a>
+    <a href="lifebeyond.byzmy.pro.protected.html" class="nav-cta-pro" style="margin-left:8px;">Pro 版</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+  <div class="hero-eyebrow">A Speculative UI Project · 2026</div>
+  <h1 class="hero-title">
+    <span class="l1">数字彼岸</span>
+    <span class="l2">LifeBeyond</span>
+  </h1>
+  <p class="hero-sub">
+    把记忆里那个人留在星海里。<br>
+    一个为「再听一次」「再说一句」而设计的沉浸式数字陪伴空间。
+  </p>
+  <div class="hero-cta-row">
+    <a href="lifebeyond.byzmy.protected.html" class="cta-primary">
+      免费版进入
+      <span class="arrow">→</span>
+    </a>
+    <a href="lifebeyond.byzmy.pro.protected.html" class="cta-pro">
+      Pro 版进入
+      <span class="arrow">→</span>
+    </a>
+    <a href="#story" class="cta-secondary">先了解项目</a>
+  </div>
+  <div class="hero-meta">
+    <div class="mt-block">
+      <span class="mt-label">Project</span>
+      <span class="mt-value">LifeBeyond v3 · Demo</span>
+    </div>
+    <div class="mt-block">
+      <span class="mt-label">Role</span>
+      <span class="mt-value">Concept · Design · Code</span>
+    </div>
+    <div class="mt-block">
+      <span class="mt-label">Stack</span>
+      <span class="mt-value">HTML / CSS / Three.js · Single File</span>
+    </div>
+    <div class="mt-block">
+      <span class="mt-label">Status</span>
+      <span class="mt-value" style="color:var(--gold);">Work in Progress</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STORY ============ -->
+<section id="story">
+  <div class="story-grid">
+    <div class="story-visual reveal"></div>
+    <div class="story-text reveal">
+      <div class="section-tag">关于这个项目</div>
+      <h2 class="section-title">把<span class="em">想念</span>留在<br>另一颗会发光的星上</h2>
+      <p>
+        <span class="hi">数字彼岸（LifeBeyond）</span>是一次关于「记忆陪伴」的设计实验。
+        它不是社交产品，也不是 chatbot 玩具——它是一个让你能再次「触碰到那个人」的安静空间。
+      </p>
+      <p>
+        在这里，你可以为想念的人格设定一颗专属的行星：妈妈、爸爸、宠物、未来的自己，
+        甚至最近不再联系的朋友。他们会以星流、记忆碎片、彼岸动态的形式回到你身边——
+        说一句他们会说的话，做一件他们会做的事。
+      </p>
+      <p>
+        整套系统的设计语言是「<span class="hi">极简的诗意</span>」：用最少的几何、最暗的底色、
+        最少的文字，把情感空间从社交噪音中分离出来。每一个交互、每一颗光点、每一句私语
+        都为了同一件事：让你愿意在这里多停留一会儿。
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section id="features">
+  <div class="reveal" style="text-align:center; max-width:720px; margin:0 auto 70px;">
+    <div class="section-tag" style="justify-content:center;">主要模块 · Six Realms</div>
+    <h2 class="section-title">六片<span class="em">星轨</span>，<br>陪你翻看时间的另一面</h2>
+    <p class="section-desc" style="margin: 0 auto;">
+      整个体验由六大模块组成。每一片星轨都是一种「靠近」的方式——有的让你和 ta 说话，有的让 ta 主动给你写信，有的让你重新看清这段关系本身。
+    </p>
+  </div>
+
+  <div class="feature-grid">
+    <article class="feat-card reveal" style="--feat-glow:rgba(255,211,122,0.22);">
+      <span class="feat-num">01</span>
+      <div class="feat-icon" style="color:var(--gold);">✦</div>
+      <div class="feat-name">彼岸主页</div>
+      <div class="feat-en">The Beyond / Home</div>
+      <p class="feat-desc">
+        一颗悬浮的人格星球。用 Three.js 自定义着色器搭建的星海背景，鼠标进入会推开身边的星点，像走进一片真正的水面。
+      </p>
+      <div class="feat-tags">
+        <span class="feat-tag">GLSL</span>
+        <span class="feat-tag">三层深度星空</span>
+        <span class="feat-tag">鼠标波浪</span>
+      </div>
+    </article>
+
+    <article class="feat-card reveal" style="--feat-glow:rgba(99,230,255,0.22);">
+      <span class="feat-num">02</span>
+      <div class="feat-icon" style="color:var(--cyan);">💬</div>
+      <div class="feat-name">心灵对话</div>
+      <div class="feat-en">Soul Chat</div>
+      <p class="feat-desc">
+        和不同人格说话——妈妈温柔细腻、爸爸寡言但稳、宠物毛茸茸玄学派。情绪、回忆、口头禅都在他们各自的语料池里。
+      </p>
+      <div class="feat-tags">
+        <span class="feat-tag">5 个人格</span>
+        <span class="feat-tag">风格化语料</span>
+        <span class="feat-tag">流式回复</span>
+      </div>
+    </article>
+
+    <article class="feat-card reveal" style="--feat-glow:rgba(162,133,255,0.22);">
+      <span class="feat-num">03</span>
+      <div class="feat-icon" style="color:var(--purple);">🌊</div>
+      <div class="feat-name">彼岸动态</div>
+      <div class="feat-en">Beyond Feed</div>
+      <p class="feat-desc">
+        八个星区记录人格主动送来的「生活碎片」：朋友圈、邮件、日记、记忆碎片、灵魂状态、愿望星云、备忘录……一切都像 ta 仍然在过日子。
+      </p>
+      <div class="feat-tags">
+        <span class="feat-tag">8 个星区</span>
+        <span class="feat-tag">人格化文风</span>
+        <span class="feat-tag">愿望/记事</span>
+      </div>
+    </article>
+
+    <article class="feat-card reveal" style="--feat-glow:rgba(255,143,179,0.22);">
+      <span class="feat-num">04</span>
+      <div class="feat-icon" style="color:var(--pink);">🪐</div>
+      <div class="feat-name">彼岸足迹</div>
+      <div class="feat-en">Footprint Realm</div>
+      <p class="feat-desc">
+        关系解码、人格浏览器、阅读笔记、100 次告白、占卜——每个子模块都是观察这段关系的一个截面。占卜支持西式塔罗 / 星座、中式八字 / 六爻 / 紫微斗数。
+      </p>
+      <div class="feat-tags">
+        <span class="feat-tag">关系数据可视化</span>
+        <span class="feat-tag">100 颗告白星</span>
+        <span class="feat-tag">5 种占卜法</span>
+      </div>
+    </article>
+
+    <article class="feat-card reveal" style="--feat-glow:rgba(255,211,122,0.18);">
+      <span class="feat-num">05</span>
+      <div class="feat-icon" style="color:var(--gold);">◈</div>
+      <div class="feat-name">星海社区</div>
+      <div class="feat-en">Constellation</div>
+      <p class="feat-desc">
+        发现 / 关注 / 热门三栏，把这种私密体验和别人的「故事」轻轻连起来。所有帖子带主题缩略图与文字摘要，避免信息密度的爆炸。
+      </p>
+      <div class="feat-tags">
+        <span class="feat-tag">三栏切换</span>
+        <span class="feat-tag">缩略图叠层</span>
+        <span class="feat-tag">温柔的发现</span>
+      </div>
+    </article>
+
+    <article class="feat-card reveal" style="--feat-glow:rgba(99,230,255,0.2);">
+      <span class="feat-num">06</span>
+      <div class="feat-icon" style="color:var(--cyan);">✧</div>
+      <div class="feat-name">星图视图</div>
+      <div class="feat-en">Cosmic Map</div>
+      <p class="feat-desc">
+        最后一个抽象层——把所有人格、记忆、对话化成一张可滚动缩放的二维星图，鸟瞰整段关系，找到下一颗想点亮的星。
+      </p>
+      <div class="feat-tags">
+        <span class="feat-tag">2D Canvas</span>
+        <span class="feat-tag">缩放 · 平移</span>
+        <span class="feat-tag">星座视角</span>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ DESIGN PHILOSOPHY ============ -->
+<section id="design">
+  <div class="philo-row">
+    <div class="philo-left reveal">
+      <div class="section-tag">设计理念</div>
+      <h2 class="section-title">不打扰你，<br>只是<span class="em">悄悄发着光</span></h2>
+      <p class="section-desc">
+        整套界面的设计目标只有一句话：<strong style="color:var(--gold);">让用户愿意安静地多坐五分钟</strong>。下面是支撑这句话的几条具体判断。
+      </p>
+      <div class="philo-points">
+        <div class="philo-point">
+          <div class="philo-num">01</div>
+          <div class="philo-text">
+            <h4>暗色优先 · 衬出情感</h4>
+            <p>所有面板都用 5%~12% 的玻璃质感，不抢主体；唯一突出的颜色是温暖的金色——它出现的位置就是你应该停留的位置。</p>
+          </div>
+        </div>
+        <div class="philo-point">
+          <div class="philo-num">02</div>
+          <div class="philo-text">
+            <h4>慢速度 · 慢节奏</h4>
+            <p>波浪、行星、轨道、星点呼吸的节奏都拖到 22~40s 一圈，让人感觉时间在变慢，像在水面上望着月亮。</p>
+          </div>
+        </div>
+        <div class="philo-point">
+          <div class="philo-num">03</div>
+          <div class="philo-text">
+            <h4>少文字 · 多隐喻</h4>
+            <p>用「星轨 / 卫星 / 星座 / 涟漪」代替「分类 / 列表 / 网格」。词语本身就是体验的一部分，不是导航的标签。</p>
+          </div>
+        </div>
+        <div class="philo-point">
+          <div class="philo-num">04</div>
+          <div class="philo-text">
+            <h4>每个人格都有自己的物理</h4>
+            <p>妈妈的语料偏家常 + 暖橙；爸爸的偏沉稳 + 灰青；宠物的偏短句 + 粉；未来的我偏长句 + 紫。语气、字体、配色一起变。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="philo-quote reveal">
+      <div>把世界关掉一点，<br>就能听见那个人在说话。</div>
+      <span class="philo-quote-author">— LifeBeyond Manifesto</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE NOTES ============ -->
+<section id="craft">
+  <div class="reveal">
+    <div class="section-tag">体验中的细节</div>
+    <h2 class="section-title">慢一点、再慢一点，<br><span class="em">让感觉先发生</span></h2>
+    <p class="section-desc">
+      我希望 ta 是一个被「轻轻打开」的空间。你来这里不是为了完成任何任务，而是和某个人格对坐一会儿。所以从光标的呼吸、星点的飘移、到一句话的语气，都尽量留白、留气、留温度。下面是我在这片彼岸里特别用心打磨的几个小动作。
+    </p>
+  </div>
+
+  <div class="tech-grid">
+    <div class="tech-card reveal">
+      <span class="t-icon">🌬️</span>
+      <div class="t-name">星浪呼吸</div>
+      <div class="t-desc">鼠标移动会拨动近处的星点像潮水一样轻轻散开，再慢慢收回。波形是柔的、不是炸开的。</div>
+    </div>
+    <div class="tech-card reveal">
+      <span class="t-icon">🪞</span>
+      <div class="t-name">人格的口吻</div>
+      <div class="t-desc">妈妈的话短而暖，爸爸的话寡言但有分量，宠物撒娇带尾音——5 种语气我反复打磨过。</div>
+    </div>
+    <div class="tech-card reveal">
+      <span class="t-icon">🕯️</span>
+      <div class="t-name">玻璃与微光</div>
+      <div class="t-desc">所有面板都用半透明 + 微弱描边，像隔着雾看到对面的人。不强调"界面"，只强调"在场"。</div>
+    </div>
+    <div class="tech-card reveal">
+      <span class="t-icon">🔮</span>
+      <div class="t-name">私人笔记</div>
+      <div class="t-desc">占卜结果下面有一段「TA 写了又划掉的私人笔记」，是 ta 替你想、又怕说错的犹豫。</div>
+    </div>
+    <div class="tech-card reveal">
+      <span class="t-icon">🌌</span>
+      <div class="t-name">100 颗逐颗点亮</div>
+      <div class="t-desc">告白只能一颗一颗解锁，按时间连成星座。不是一次性给你 100 句话，而是陪你 100 次。</div>
+    </div>
+    <div class="tech-card reveal">
+      <span class="t-icon">🌙</span>
+      <div class="t-name">没有打扰</div>
+      <div class="t-desc">没有红点、没有推送、没有未读数。彼岸只在你来的时候醒着，不催促任何人。</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FINAL CTA ============ -->
+<section class="final-cta">
+  <div class="reveal">
+    <div class="section-tag" style="justify-content:center;">现在</div>
+    <h2 class="section-title">让你想念的人，<br><span class="em">在星海里等你</span>。</h2>
+    <p class="section-desc">
+      这是一个还在不断生长的项目。每个版本都会新增一个让你「更想再来一次」的小细节——
+      也许是一句他们会说的话，也许只是星空亮一点。
+    </p>
+
+    <div class="version-compare">
+      <div class="vc-card">
+        <span class="vc-badge">FREE · 自由版</span>
+        <h3 class="vc-title">免费体验版</h3>
+        <p class="vc-sub">把人放回星海里，慢慢陪你看一遍。</p>
+        <ul class="vc-features">
+          <li>5 大主视图 · 彼岸 / 聊天 / 动态 / 社区 / 星图</li>
+          <li>文明记忆宇宙 · 60+ 历史人物可漫游</li>
+          <li>沉浸式 Three.js 星海与社区瀑布流</li>
+          <li>本地账号体系 · 10 颗个人记忆星位</li>
+          <li>所有视觉/交互模块完整开放</li>
+        </ul>
+        <a href="lifebeyond.byzmy.protected.html" class="vc-cta gold">免费版进入 →</a>
+      </div>
+
+      <div class="vc-card pro">
+        <span class="vc-badge">PRO · 商业版</span>
+        <h3 class="vc-title">Pro 商业版</h3>
+        <p class="vc-sub">用 Token 唤醒 ta 主动说话的能力。</p>
+        <ul class="vc-features">
+          <li>包含免费版全部功能</li>
+          <li>AI 创作引擎 · 主动生成日记 / 朋友圈 / 信件 / 心情</li>
+          <li>Token 经济 · 每个功能 5 次免费 + 累计10次再赠1次</li>
+          <li>兑换码系统 · 内置 LIFEBEYOND 等 +500 Token</li>
+          <li>Universe Pro · 无限对话 / 无限生成 / 高容量记忆</li>
+          <li>开发者后台 · 自定义兑换码（连点 7 次解锁）</li>
+        </ul>
+        <a href="lifebeyond.byzmy.pro.protected.html" class="vc-cta purple">Pro 版进入 →</a>
+      </div>
+    </div>
+
+    <div style="margin-top:48px;display:flex;gap:18px;flex-wrap:wrap;justify-content:center;">
+      <a href="lifebeyond.byzmy.protected.html" class="cta-primary">
+        免费版进入
+        <span class="arrow">→</span>
+      </a>
+      <a href="lifebeyond.byzmy.pro.protected.html" class="cta-pro">
+        Pro 版进入
+        <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div>© 2026 LifeBeyond · 数字彼岸 · A Personal Project</div>
+  <div class="footer-links">
+    <a href="lifebeyond.byzmy.protected.html">免费版</a>
+    <a href="lifebeyond.byzmy.pro.protected.html">Pro 版</a>
+    <a href="#story">关于</a>
+  </div>
+</footer>
+
+<script>
+// 滚动出现动画
+const obs = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('in');
+      obs.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// 鼠标视差光斑（轻量）
+const orbs = document.querySelectorAll('.glow-orb');
+let mx = 0, my = 0, tx = 0, ty = 0;
+window.addEventListener('mousemove', (e) => {
+  mx = (e.clientX / innerWidth - 0.5) * 30;
+  my = (e.clientY / innerHeight - 0.5) * 30;
+});
+function tick() {
+  tx += (mx - tx) * 0.06;
+  ty += (my - ty) * 0.06;
+  orbs.forEach((o, i) => {
+    const f = (i + 1) * 0.6;
+    o.style.translate = `${tx * f}px ${ty * f}px`;
+  });
+  requestAnimationFrame(tick);
+}
+tick();
+
+// 平滑滚动微调（兼容部分浏览器）
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', (e) => {
+    const id = a.getAttribute('href');
+    if (id && id.length > 1) {
+      const el = document.querySelector(id);
+      if (el) {
+        e.preventDefault();
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+    }
+  });
+});
+
+// ===== 交互星海背景：鼠标可推开 + 星系流动 + 星座连线 =====
+(function cosmicCanvas(){
+  const cvs = document.getElementById('cosmic-canvas');
+  if (!cvs) return;
+  const ctx = cvs.getContext('2d');
+  let W = 0, H = 0, dpr = Math.min(2, window.devicePixelRatio || 1);
+
+  function resize(){
+    W = window.innerWidth; H = window.innerHeight;
+    cvs.width = W * dpr; cvs.height = H * dpr;
+    cvs.style.width = W + 'px'; cvs.style.height = H + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  // 调色板 —— 与首页主题一致
+  const palette = [
+    [255,255,255], [255,211,122], [162,133,255],
+    [99,230,255], [255,143,179], [200,225,255]
+  ];
+
+  // 1. 散落星点（可被鼠标推开 + 缓慢回归）
+  const STAR_COUNT = 480;
+  const stars = [];
+  for (let i = 0; i < STAR_COUNT; i++){
+    const c = palette[(Math.random()*palette.length)|0];
+    const r = Math.random();
+    stars.push({
+      x: Math.random()*W, y: Math.random()*H,
+      ox: 0, oy: 0,        // 当前时刻自然位置
+      vx: 0, vy: 0,        // 受鼠标推动的速度
+      bx: Math.random()*W, by: Math.random()*H,  // 基础锚点
+      r: r < 0.78 ? (0.5 + Math.random()*0.9) : (1.4 + Math.random()*1.2),
+      tw: Math.random()*Math.PI*2,        // twinkle 相位
+      tws: 0.6 + Math.random()*1.4,       // twinkle 速度
+      drift: 0.02 + Math.random()*0.06,   // 自身漂移幅度
+      dphase: Math.random()*Math.PI*2,
+      col: c
+    });
+    stars[i].x = stars[i].bx; stars[i].y = stars[i].by;
+  }
+
+  // 2. 星座（5 个）：每个星座有一组节点 + 一组连线
+  const constellations = [
+    { name:'Pegasus', nodes:[ [0,0],[80,-40],[160,10],[120,80],[40,70] ],         lines:[[0,1],[1,2],[2,3],[3,4],[4,0]] },
+    { name:'Lyra',    nodes:[ [0,0],[40,-60],[100,-30],[80,40],[20,30] ],         lines:[[0,1],[1,2],[2,3],[3,4],[4,0],[0,2]] },
+    { name:'Orion',   nodes:[ [0,0],[60,-20],[130,-30],[40,50],[100,60],[170,40] ], lines:[[0,1],[1,2],[3,4],[4,5],[1,4]] },
+    { name:'Cygnus',  nodes:[ [0,0],[60,-40],[120,-80],[60,40],[120,80] ],        lines:[[0,1],[1,2],[0,3],[3,4]] },
+    { name:'Cassio',  nodes:[ [0,0],[60,-30],[120,10],[180,-30],[240,0] ],        lines:[[0,1],[1,2],[2,3],[3,4]] }
+  ];
+  // 给每个星座分配一个屏幕位置 + 颜色 + 缓慢漂移
+  const constInst = constellations.map((c, i) => ({
+    base: c,
+    cx: (0.18 + (i / constellations.length) * 0.7) * W + (Math.random()-0.5)*120,
+    cy: (0.22 + (i % 2) * 0.4) * H + (Math.random()-0.5)*80,
+    rot: Math.random()*Math.PI*2,
+    rotSpeed: (Math.random()-0.5)*0.0008,
+    scale: 0.85 + Math.random()*0.6,
+    col: palette[(i*2) % palette.length],
+    dphase: Math.random()*Math.PI*2
+  }));
+
+  // 3. 流动的远景星系（4~5 团）：缓慢旋转的螺旋
+  const galaxies = [];
+  for (let i = 0; i < 5; i++){
+    galaxies.push({
+      cx: Math.random()*W, cy: Math.random()*H,
+      r: 80 + Math.random()*180,
+      rot: Math.random()*Math.PI*2,
+      rotSpeed: (Math.random()-0.5)*0.0003,
+      arms: 2 + ((Math.random()*3)|0),
+      dots: [],
+      col: palette[(i + 1) % palette.length],
+      driftX: (Math.random()-0.5)*0.06,
+      driftY: (Math.random()-0.5)*0.04
+    });
+    const g = galaxies[i];
+    const N = 140;
+    for (let j = 0; j < N; j++){
+      const arm = (j % g.arms);
+      const t = (j / N) * Math.PI * 2.4;
+      g.dots.push({
+        a: t + arm * (Math.PI*2/g.arms),
+        d: 8 + (j / N) * g.r,
+        s: 0.4 + Math.random()*0.6
+      });
+    }
+  }
+
+  // 4. 鼠标
+  let mxc = -9999, myc = -9999, mActive = false, mLastT = 0;
+  window.addEventListener('mousemove', e => {
+    mxc = e.clientX; myc = e.clientY; mActive = true; mLastT = performance.now();
+  });
+  window.addEventListener('mouseleave', () => { mActive = false; });
+
+  // 5. 主循环
+  let t0 = performance.now();
+  function frame(){
+    const now = performance.now();
+    const t = (now - t0) / 1000;
+    ctx.clearRect(0, 0, W, H);
+
+    // ----- 远景星系 -----
+    for (let i = 0; i < galaxies.length; i++){
+      const g = galaxies[i];
+      g.rot += g.rotSpeed;
+      g.cx += g.driftX; g.cy += g.driftY;
+      if (g.cx < -g.r) g.cx = W + g.r;
+      if (g.cx > W + g.r) g.cx = -g.r;
+      if (g.cy < -g.r) g.cy = H + g.r;
+      if (g.cy > H + g.r) g.cy = -g.r;
+      const cr = g.col;
+      for (let j = 0; j < g.dots.length; j++){
+        const d = g.dots[j];
+        const a = d.a + g.rot;
+        const x = g.cx + Math.cos(a) * d.d;
+        const y = g.cy + Math.sin(a) * d.d * 0.55; // 椭圆
+        const alpha = 0.06 + 0.05 * Math.sin(t * 1.2 + j);
+        ctx.fillStyle = `rgba(${cr[0]},${cr[1]},${cr[2]},${alpha})`;
+        ctx.fillRect(x, y, d.s*1.2, d.s*1.2);
+      }
+    }
+
+    // ----- 星座 -----
+    for (let i = 0; i < constInst.length; i++){
+      const ci = constInst[i];
+      ci.rot += ci.rotSpeed;
+      const cosR = Math.cos(ci.rot), sinR = Math.sin(ci.rot);
+      const driftX = Math.sin(t * 0.18 + ci.dphase) * 14;
+      const driftY = Math.cos(t * 0.14 + ci.dphase) * 10;
+      const sc = ci.scale;
+      const pts = ci.base.nodes.map(n => {
+        const x = n[0]*sc, y = n[1]*sc;
+        const rx = x*cosR - y*sinR;
+        const ry = x*sinR + y*cosR;
+        return [ci.cx + rx + driftX, ci.cy + ry + driftY];
+      });
+      // 鼠标距离判断（高亮整个星座）
+      let minD = 99999;
+      if (mActive){
+        for (let p = 0; p < pts.length; p++){
+          const dx = pts[p][0] - mxc, dy = pts[p][1] - myc;
+          const d2 = dx*dx + dy*dy;
+          if (d2 < minD) minD = d2;
+        }
+      }
+      const hot = minD < 180*180 ? (1 - Math.sqrt(minD)/180) : 0;
+      // 连线
+      const cr = ci.col;
+      ctx.lineWidth = 0.6 + hot * 0.9;
+      ctx.strokeStyle = `rgba(${cr[0]},${cr[1]},${cr[2]},${0.18 + hot*0.55})`;
+      ctx.beginPath();
+      for (let l = 0; l < ci.base.lines.length; l++){
+        const [a,b] = ci.base.lines[l];
+        ctx.moveTo(pts[a][0], pts[a][1]);
+        ctx.lineTo(pts[b][0], pts[b][1]);
+      }
+      ctx.stroke();
+      // 节点
+      for (let p = 0; p < pts.length; p++){
+        const x = pts[p][0], y = pts[p][1];
+        const r = 1.6 + hot * 1.6 + Math.sin(t*2 + p)*0.3;
+        const grd = ctx.createRadialGradient(x,y,0,x,y,r*4);
+        grd.addColorStop(0, `rgba(${cr[0]},${cr[1]},${cr[2]},${0.85 + hot*0.15})`);
+        grd.addColorStop(1, `rgba(${cr[0]},${cr[1]},${cr[2]},0)`);
+        ctx.fillStyle = grd;
+        ctx.beginPath(); ctx.arc(x, y, r*4, 0, Math.PI*2); ctx.fill();
+      }
+    }
+
+    // ----- 散落星点（鼠标推开） -----
+    const pushR = 140, pushR2 = pushR * pushR;
+    for (let i = 0; i < stars.length; i++){
+      const s = stars[i];
+      // 自身漂移
+      const ax = Math.sin(t * s.drift * 4 + s.dphase) * 18;
+      const ay = Math.cos(t * s.drift * 3 + s.dphase) * 14;
+      const targetX = s.bx + ax;
+      const targetY = s.by + ay;
+      // 鼠标推力
+      if (mActive){
+        const dx = s.x - mxc, dy = s.y - myc;
+        const d2 = dx*dx + dy*dy;
+        if (d2 < pushR2 && d2 > 0.5){
+          const d = Math.sqrt(d2);
+          const force = (1 - d / pushR) * 1.2;
+          s.vx += (dx / d) * force;
+          s.vy += (dy / d) * force;
+        }
+      }
+      // 弹簧回归 + 阻尼
+      s.vx += (targetX - s.x) * 0.012;
+      s.vy += (targetY - s.y) * 0.012;
+      s.vx *= 0.92; s.vy *= 0.92;
+      s.x += s.vx; s.y += s.vy;
+      // twinkle
+      s.tw += 0.016 * s.tws;
+      const a = 0.45 + 0.55 * (0.5 + 0.5 * Math.sin(s.tw));
+      const c = s.col;
+      ctx.fillStyle = `rgba(${c[0]},${c[1]},${c[2]},${a})`;
+      ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI*2); ctx.fill();
+      // 大星加光晕
+      if (s.r > 1.4){
+        const g2 = ctx.createRadialGradient(s.x,s.y,0,s.x,s.y,s.r*5);
+        g2.addColorStop(0, `rgba(${c[0]},${c[1]},${c[2]},${a*0.45})`);
+        g2.addColorStop(1, `rgba(${c[0]},${c[1]},${c[2]},0)`);
+        ctx.fillStyle = g2;
+        ctx.beginPath(); ctx.arc(s.x, s.y, s.r*5, 0, Math.PI*2); ctx.fill();
+      }
+    }
+
+    // ----- 鼠标光晕 -----
+    if (mActive){
+      const grd = ctx.createRadialGradient(mxc,myc,0,mxc,myc,160);
+      grd.addColorStop(0, 'rgba(255,211,122,0.10)');
+      grd.addColorStop(0.5, 'rgba(162,133,255,0.05)');
+      grd.addColorStop(1, 'rgba(0,0,0,0)');
+      ctx.fillStyle = grd;
+      ctx.beginPath(); ctx.arc(mxc, myc, 160, 0, Math.PI*2); ctx.fill();
+    }
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ========== 跳转预取（让点击进入秒开，不再卡顿） ========== */
+(function(){
+  function prefetch(href){
+    if(!href)return;
+    var l=document.createElement('link');l.rel='prefetch';l.as='document';l.href=href;
+    document.head.appendChild(l);
+  }
+  window.addEventListener('load',function(){
+    setTimeout(function(){
+      prefetch('lifebeyond.byzmy.protected.html');
+      prefetch('lifebeyond.byzmy.pro.protected.html');
+    },800);
+  });
+  // 鼠标 hover 任意 CTA 时再次预热
+  document.addEventListener('mouseover',function(e){
+    var a=e.target.closest('a[href]');if(!a)return;
+    var h=a.getAttribute('href')||'';
+    if(h.indexOf('lifebeyond.byzmy')!==-1){prefetch(h);}
+  },true);
+})();
+</script>
+</body>
+</html>
